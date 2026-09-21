@@ -21,7 +21,7 @@ public class JsonAddressBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
 
-    private Path filePath;
+    private final Path filePath;
 
     public JsonAddressBookStorage(Path filePath) {
         this.filePath = filePath;
@@ -66,6 +66,7 @@ public class JsonAddressBookStorage {
 
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the storage.
+     *
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */

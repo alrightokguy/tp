@@ -1,6 +1,6 @@
 package seedu.address.commons.core;
 
-import java.awt.Point;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,42 +10,28 @@ import seedu.address.commons.util.ToStringBuilder;
  * A Serializable class that contains the GUI settings.
  * Guarantees: immutable.
  */
-public class GuiSettings implements Serializable {
+public record GuiSettings(double windowWidth, double windowHeight,
+                          Point windowCoordinates) implements Serializable {
 
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
-
-    private final double windowWidth;
-    private final double windowHeight;
-    private final Point windowCoordinates;
 
     /**
      * Constructs a {@code GuiSettings} with the default height, width and position.
      */
     public GuiSettings() {
-        windowWidth = DEFAULT_WIDTH;
-        windowHeight = DEFAULT_HEIGHT;
-        windowCoordinates = null; // null represent no coordinates
+        this(DEFAULT_WIDTH, DEFAULT_HEIGHT, null); // null represent no coordinates
     }
 
     /**
      * Constructs a {@code GuiSettings} with the specified height, width and position.
      */
     public GuiSettings(double windowWidth, double windowHeight, int xPosition, int yPosition) {
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
-        windowCoordinates = new Point(xPosition, yPosition);
+        this(windowWidth, windowHeight, new Point(xPosition, yPosition));
     }
 
-    public double getWindowWidth() {
-        return windowWidth;
-    }
-
-    public double getWindowHeight() {
-        return windowHeight;
-    }
-
-    public Point getWindowCoordinates() {
+    @Override
+    public Point windowCoordinates() {
         return windowCoordinates != null ? new Point(windowCoordinates) : null;
     }
 
@@ -63,11 +49,6 @@ public class GuiSettings implements Serializable {
         return windowWidth == otherGuiSettings.windowWidth
                 && windowHeight == otherGuiSettings.windowHeight
                 && Objects.equals(windowCoordinates, otherGuiSettings.windowCoordinates);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(windowWidth, windowHeight, windowCoordinates);
     }
 
     @Override

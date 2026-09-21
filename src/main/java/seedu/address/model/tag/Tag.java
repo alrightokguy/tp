@@ -7,22 +7,19 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Tag in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
-public class Tag {
+public record Tag(String tagName) {
 
     public static final String MESSAGE_CONSTRAINTS = "Tag names should be alphanumeric";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
-
-    public final String tagName;
 
     /**
      * Constructs a {@code Tag}.
      *
      * @param tagName A valid tag name.
      */
-    public Tag(String tagName) {
+    public Tag {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
     }
 
     /**
@@ -44,11 +41,6 @@ public class Tag {
         }
 
         return tagName.equals(otherTag.tagName);
-    }
-
-    @Override
-    public int hashCode() {
-        return tagName.hashCode();
     }
 
     /**

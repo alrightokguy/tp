@@ -28,14 +28,14 @@ public class MainWindow extends UiPart<Stage> {
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-    private Stage primaryStage;
-    private Logic logic;
-    private Path dataFilePath;
+    private final Stage primaryStage;
+    private final Logic logic;
+    private final Path dataFilePath;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
-    private HelpWindow helpWindow;
+    private final HelpWindow helpWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -82,6 +82,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -131,11 +132,11 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
-        primaryStage.setHeight(guiSettings.getWindowHeight());
-        primaryStage.setWidth(guiSettings.getWindowWidth());
-        if (guiSettings.getWindowCoordinates() != null) {
-            primaryStage.setX(guiSettings.getWindowCoordinates().getX());
-            primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        primaryStage.setHeight(guiSettings.windowHeight());
+        primaryStage.setWidth(guiSettings.windowWidth());
+        if (guiSettings.windowCoordinates() != null) {
+            primaryStage.setX(guiSettings.windowCoordinates().getX());
+            primaryStage.setY(guiSettings.windowCoordinates().getY());
         }
     }
 
@@ -179,14 +180,14 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
-            logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            logger.info("Result: " + commandResult.feedbackToUser());
+            resultDisplay.setFeedbackToUser(commandResult.feedbackToUser());
 
-            if (commandResult.isShowHelp()) {
+            if (commandResult.showHelp()) {
                 handleHelp();
             }
 
-            if (commandResult.isExit()) {
+            if (commandResult.exit()) {
                 handleExit();
             }
 
