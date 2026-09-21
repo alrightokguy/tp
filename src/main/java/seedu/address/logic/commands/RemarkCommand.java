@@ -40,11 +40,11 @@ public class RemarkCommand extends Command {
      * @param index  of the person in the filtered person list to edit the remark
      * @param remark of the person to be updated to
      */
-    public RemarkCommand(Index index, Remark remark) {
+    public RemarkCommand(Index index, String remark) {
         requireAllNonNull(index, remark);
 
         this.index = index;
-        this.remark = remark;
+        this.remark = new Remark(remark);
     }
 
     @Override
